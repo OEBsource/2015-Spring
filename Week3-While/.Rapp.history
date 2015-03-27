@@ -1,0 +1,622 @@
+MyVec<-NULL#
+MyMat<-matrix(rnorm(10000), 1000)#
+#
+for(i in 1:10){#
+	MyVec[i]<-sum(MyMat[i, ])#
+}
+system.time(#
+for(i in 1:10){#
+	MyVec[i]<-sum(MyMat[i, ])#
+}#
+#
+)
+MyVec<-NULL#
+MyMat<-matrix(rnorm(10000000), 100000)
+system.time(#
+for(i in 1:10){#
+	MyVec[i]<-sum(MyMat[i, ])#
+}#
+#
+)
+dim(MyMat)
+MyVec<-NULL#
+MyMat<-matrix(rnorm(10000000), 100000)
+system.time(#
+for(i in 1:10){#
+	MyVec[i]<-sum(MyMat[i, ])#
+}#
+#
+)
+MyVec<-NULL#
+MyMat<-matrix(rnorm(100000000), 1000000)
+system.time(#
+for(i in 1:10){#
+	MyVec[i]<-sum(MyMat[i, ])#
+}#
+#
+)
+dim(MyVec)
+length(MyVec)
+MyVec
+for(i in 1:10){#
+	MyVec[i]<-sum(MyMat[i, ])#
+}
+dim(MyMat)
+MyVec<-NULL
+for(i in 1:10){#
+	MyVec[i]<-sum(MyMat[i, ])#
+}
+head(MyMat)
+MyVec<-NULL#
+MyMat<-matrix(rnorm(10000), 100)#
+#
+system.time(#
+for(i in 1:nrow(MyMat)){#
+	MyVec[i]<-sum(MyMat[i, ])#
+}#
+#
+)
+MyVec<-NULL#
+MyMat<-matrix(rnorm(1000000), 1000)#
+#
+system.time(#
+for(i in 1:nrow(MyMat)){#
+	MyVec[i]<-sum(MyMat[i, ])#
+}#
+#
+)
+MyVec<-NULL#
+MyMat<-matrix(rnorm(100000000), 10000)#
+#
+system.time(#
+for(i in 1:nrow(MyMat)){#
+	MyVec[i]<-sum(MyMat[i, ])#
+}#
+#
+)
+MyVec<-NULL#
+MyMat<-matrix(rnorm(10000), 1000)#
+#
+system.time(#
+for(i in 1:nrow(MyMat)){#
+	MyVec[i]<-sum(MyMat[i, ])#
+})
+MyVec<-NULL#
+MyMat<-matrix(rnorm(1000000), 10000)#
+#
+system.time(#
+for(i in 1:nrow(MyMat)){#
+	MyVec[i]<-sum(MyMat[i, ])#
+})
+sys.time(apply(MyMat,1,sum))
+system.time(apply(MyMat,1,sum))
+?apply
+S <- 30#
+Sims <- Map(function(x) matrix(rnorm(25), nrow=5, ncol=5), 1:S)
+Sims
+?Map
+S <- 3#
+Sims <- Map(function(x) matrix(rnorm(25), nrow=5, ncol=5), 1:S)
+Sims
+?list
+class(Sims)
+S <- 3#
+Sims <- Map(function(x) rnorm(25), nrow=5, ncol=5, 1:S)
+Sims <- Map(function(x) rnorm(25), 1:S)
+S <- 3#
+Sims <- Map(function(x) rnorm(25), 1:S)
+Sims
+S <- 30000#
+Sims <- Map(function(x) matrix(rnorm(25), nrow=5, ncol=5), 1:S)
+lapply_method <- function(Sims) {#
+  do.call(rbind, lapply(Sims, function(x) x[,5]))#
+}
+for_method <- function(S, Sims) {#
+  R <- matrix(NA, ncol=5, nrow=S)#
+  for (i in 1:S) R[i,] <- Sims[[i]][,5]#
+  R#
+}
+system.time(replicate(20, R.1 <<- for_method(S, Sims)))
+system.time(replicate(20, R.3 <<- lapply_method(Sims)))
+mclapply_method <- function(Sims) {#
+  do.call(rbind, mclapply(Sims, function(x) x[,5]))#
+}
+S <- 30000#
+Sims <- Map(function(x) matrix(rnorm(25), nrow=5, ncol=5), 1:S)
+for_method <- function(S, Sims) {#
+  R <- matrix(NA, ncol=5, nrow=S)#
+  for (i in 1:S) R[i,] <- Sims[[i]][,5]#
+  R#
+}#
+#
+sapply_method <- function(Sims) {#
+  t(sapply(Sims, function(x) x[,5]))#
+}#
+#
+lapply_method <- function(Sims) {#
+  do.call(rbind, lapply(Sims, function(x) x[,5]))#
+}#
+#
+mclapply_method <- function(Sims) {#
+  do.call(rbind, mclapply(Sims, function(x) x[,5]))#
+}#
+vapply_method <- function(Sims) {#
+  t(vapply(Sims, function(x) x[,5], rep(0, 5)))#
+}
+system.time(replicate(20, R.1 <<- for_method(S, Sims)))#
+system.time(replicate(20, R.2 <<- lapply_method(Sims)))#
+system.time(replicate(20, R.3 <<- mclapply_method(Sims)))
+require(multicore)
+system.time(replicate(20, R.1 <<- for_method(S, Sims)))#
+system.time(replicate(20, R.2 <<- lapply_method(Sims)))#
+system.time(replicate(20, R.3 <<- mclapply_method(Sims)))
+length(Sims)
+dim(Sims)
+S <- 3#
+Sims <- Map(function(x) matrix(rnorm(25), nrow=5, ncol=5), 1:S)
+Sims
+Test = mclapply(Sims, function(x) {#
+#
+#SimTree is a list#
+#
+apply(x,1,sum)#
+#
+#mvOU is the function that I want to run onver the list#
+#
+})
+Test
+system.time(Test <- mclapply(Sims, function(x) {#
+#
+apply(x,1,sum)#
+#
+}))
+length(Sims)
+SumSims<-matrix(NA,ncol=5,nrow=3)#
+for(i in 1:length(Sims)){#
+	for(j in 1:nrow(Sims)){#
+	SumSims<-sum(Sims[[i]][j, ])#
+	}#
+}
+SumSims<-matrix(NA,ncol=5,nrow=3)#
+for(i in 1:length(Sims)){#
+	for(j in 1:nrow(Sims[[i]])){#
+	SumSims<-sum(Sims[[i]][j, ])#
+	}#
+}
+SumSims
+SumSims<-matrix(NA,ncol=5,nrow=3)#
+for(i in 1:length(Sims)){#
+	for(j in 1:nrow(Sims[[i]])){#
+	SumSims[i,j]<-sum(Sims[[i]][j, ])#
+	}#
+}
+SumSims
+SumSims<-matrix(NA,ncol=5,nrow=3)
+system.time(#
+for(i in 1:length(Sims)){#
+	for(j in 1:nrow(Sims[[i]])){#
+	SumSims[i,j]<-sum(Sims[[i]][j, ])#
+	}#
+}#
+)
+system.time(Test <- mclapply(Sims, function(x) {#
+#
+apply(x,1,sum)#
+#
+}))
+system.time(Test <- lapply(Sims, function(x) {#
+#
+apply(x,1,sum)#
+#
+}))
+S <- 30000#
+Sims <- Map(function(x) matrix(rnorm(25), nrow=5, ncol=5), 1:S)
+system.time(Test <- lapply(Sims, function(x) {#
+#
+apply(x,1,sum)#
+#
+}))
+Sims[[1]]
+S <- 30000#
+Sims <- Map(function(x) matrix(rnorm(25), nrow=5, ncol=5), 1:S)#
+#Apply function#
+system.time(Test <- lapply(Sims, function(x) {#
+#
+apply(x,1,sum)#
+#
+}))
+SumSims<-matrix(NA, nrow=length(S), ncol=ncol(Sims[[1]]))#
+#
+system.time(#
+#
+for(i in 1:length(Sims)){#
+	for(j in 1:nrow(Sims[[i]])){#
+	SumSims[i,j]<-sum(Sims[[i]][j, ])#
+	}#
+}#
+)
+S <- 30#
+Sims <- Map(function(x) matrix(rnorm(25), nrow=5, ncol=5), 1:S)
+SumSims<-matrix(NA, nrow=length(S), ncol=ncol(Sims[[1]]))
+SumSims
+SumSims<-matrix(NA, nrow=length(Sims), ncol=ncol(Sims[[1]]))
+SumSims
+S <- 30#
+Sims <- Map(function(x) matrix(rnorm(25), nrow=5, ncol=5), 1:S)#
+#Apply function#
+system.time(Test <- lapply(Sims, function(x) {#
+#
+apply(x,1,sum)#
+#
+}))#
+SumSims<-matrix(NA, nrow=length(Sims), ncol=ncol(Sims[[1]]))#
+#
+system.time(#
+#
+for(i in 1:length(Sims)){#
+	for(j in 1:nrow(Sims[[i]])){#
+	SumSims[i,j]<-sum(Sims[[i]][j, ])#
+	}#
+}#
+)
+S <- 3000#
+Sims <- Map(function(x) matrix(rnorm(25), nrow=5, ncol=5), 1:S)#
+#Apply function#
+system.time(Test <- lapply(Sims, function(x) {#
+#
+apply(x,1,sum)#
+#
+}))#
+SumSims<-matrix(NA, nrow=length(Sims), ncol=ncol(Sims[[1]]))#
+#
+system.time(#
+#
+for(i in 1:length(Sims)){#
+	for(j in 1:nrow(Sims[[i]])){#
+	SumSims[i,j]<-sum(Sims[[i]][j, ])#
+	}#
+}#
+)
+SumSims
+Test
+apply(Sims,1,sum)
+?outer
+outer(seq(1,10,1), seq(1,10,1), FUN = "*")
+A<-seq(1,10,1)#
+B<-seq(1,10,1)
+for(i in 1:length(A)){#
+    for(j in 1:length(B)){#
+      Tables[i,j]<-i*j#
+    }	#
+  }
+A<-seq(1,10,1)#
+B<-A#
+#
+Tables<-matrix(data=NA, ncol=length(A), nrow=length(B))
+A<-seq(1,10,1)#
+B<-A#
+#
+Tables<-matrix(data=NA, ncol=length(A), nrow=length(B))#
+system.time(#
+  for(i in 1:length(A)){#
+    for(j in 1:length(B)){#
+      Tables[i,j]<-i*j#
+    }	#
+  }#
+)#
+system.time(outer(seq(1,10,1), seq(1,10,1), FUN = "*"))
+A<-seq(1,1000,1)#
+B<-A#
+#
+Tables<-matrix(data=NA, ncol=length(A), nrow=length(B))#
+system.time(#
+  for(i in 1:length(A)){#
+    for(j in 1:length(B)){#
+      Tables[i,j]<-i*j#
+    }	#
+  }#
+)#
+system.time(outer(seq(1,1000,1), seq(1,1000,1), FUN = "*"))
+? do.call
+do.call(rbind, lapply(Sims, function(x) x[,5]))
+Sims[[1]]
+length(Sims)
+Sims[[3000]]
+lapply(Sims, function(x) sum(,))
+lapply(Sims, function(x) sum(1,))
+lapply(Sims, function(x) sum(x[1,]))
+lapply(Sims, function(x) sum(x[,]))
+Sims[[3000]]
+Sims[[3000]][1,]
+sum(Sims[[3000]][1,])
+sum(Sims[[3000]][5,])
+lapply(Sims, function(x) sum(x[1,]))
+Sims[[3000]][1,]
+sum(Sims[[3000]][1,])
+lapply(Sims, function(x) sum(x[,]))
+lapply(Sims, function(x) apply(x,1,sum))
+sum(Sims[[3000]][1,])
+sum(Sims[[3000]][2,])
+do.call(lapply(Sims, function(x) apply(x,1,sum)))
+do.call(rbind, lapply(Sims, function(x) apply(x,1,sum)))
+system.time(lapply(Sims, function(x) apply(x,1,sum)))
+SumSims<-matrix(NA, nrow=length(Sims), ncol=ncol(Sims[[1]]))
+system.time(#
+#
+for(i in 1:length(Sims)){#
+	for(j in 1:nrow(Sims[[i]])){#
+	SumSims[i,j]<-sum(Sims[[i]][j, ])#
+	}#
+}#
+)
+require(stats)
+tapply(warpbreaks$breaks, warpbreaks[,-1], sum)
+warpbreaks$breaks
+warpbreaks
+tapply(warpbreaks$breaks, warpbreaks[,-1], range)
+tapply(warpbreaks$breaks, warpbreaks[,-1], mean)
+?range
+Range<-function(x){#
+Output<-(max(x)-min(x))	#
+}
+tapply(warpbreaks$breaks, warpbreaks[,-1], Range)
+table(warpbreaks)
+table(warpbreaks$breaks)
+tapply(warpbreaks$breaks, warpbreaks[,-1], Range)
+tapply(warpbreaks$breaks, warpbreaks[,-1], mean)
+tapply(warpbreaks$breaks, warpbreaks[,-1], sum)
+tapply(warpbreaks$breaks, warpbreaks[,-1], median)
+system.time(lapply(Sims, function(x) rowSums(x)))
+system.time(#
+#
+for(i in 1:length(Sims)){#
+	for(j in 1:nrow(Sims[[i]])){#
+	SumSims[i,j]<-sum(Sims[[i]][j, ])#
+	}#
+}#
+)
+S <- 3000#
+Sims <- Map(function(x) matrix(rnorm(25), nrow=5, ncol=5), 1:S)
+system.time(lapply(Sims, function(x) rowSums(x)))
+SumSims<-matrix(NA, nrow=length(Sims), ncol=ncol(Sims[[1]]))#
+#
+system.time(#
+#
+for(i in 1:length(Sims)){#
+	for(j in 1:nrow(Sims[[i]])){#
+	SumSims[i,j]<-sum(Sims[[i]][j, ])#
+	}#
+}#
+)
+lapply(Sims, function(x) rowSums(x))
+SumSims<-matrix(NA, nrow=length(Sims), ncol=ncol(Sims[[1]]))
+for(i in 1:length(Sims)){#
+	for(j in 1:nrow(Sims[[i]])){#
+	SumSims[i,j]<-sum(Sims[[i]][j, ])#
+	}#
+}
+SumSims
+Testing<-lapply(Sims, function(x) rowSums(x))
+SumSims[3000,]
+Testing[[3000]]
+do.call(rbind, lapply(Sims, function(x) rowSums(x)))
+system.time(#
+do.call(rbind, lapply(Sims, function(x) rowSums(x)))#
+)
+Landmarks=scan("~/Dropbox/Amherst/Project/Moduarity/JawPics/Paper/Data/Morphometrics/TPS/Test.txt", what="character", sep=" ")
+head(Landmarks)
+Data<-Landmarks[grep("IMAGE", Landmarks)]
+Data
+PCScores<-read.csv("~/Desktop/Test.csv", header=F)
+head(PCScores)
+rowVec<-seq(from=1, to=nrow(PCScores), by=2)
+PCScoresRows<-PCScores[rowVec,1:4]
+getwd()
+write.csv(PCScoresRows, "Rows.csv")
+PS<-read.csv("~/Dropbox/Amherst/Project/Moduarity/JawPics/Paper/Data/Correlations/PlacentalScores.csv")
+DATS<-read.text("~/Downloads/Dataset.txt")
+DATS<-read.txt("~/Downloads/Dataset.txt")
+DATS<-read.table("~/Downloads/Dataset.txt", header=T)
+DATS<-read.csv("~/Desktop/Dataset.csv")
+DATS %in% PS[,1]
+PS[,1]
+DATS
+DATS[,1]
+?match
+?which
+?merge
+merge(DATS,PS, by.x=PS[,1])
+de <- merge(DATS,PS, by=1, all=F)
+de
+getwd()
+write.csv(de, "New.csv")
+de <- merge(DATS,PS, by=1, all=T)
+de
+write.csv(de, "New.csv")
+Test<-rnorm(100)
+TestM<-matrix(Test,10,10)
+setwd("/Users/Home/Dropbox/Amherst/Courses/SOURCE/Spring2013/Moira")
+UJCentroid<-read.csv("MoiraFishLandmark.csv", header=F)#
+head(UJCentroid, 15)
+Test<-rnorm(1000)
+TestM<-matrix(Test,100,10)
+Test<-rnorm(1000)#
+TestM<-matrix(Test,100,10)#
+#
+n <- dim(TestM)[1]#
+i <- 1#
+output <- NULL#
+#
+while(i < n){#
+  coordinates <- seq(i, i+5, 1)#
+  output<- c(output, coordinates)#
+  i <- i + 10#
+}
+output
+TestM
+Test<-rnorm(1000)#
+TestM<-matrix(Test,100,10)#
+#
+n <- dim(TestM)[1]#
+i <- 1#
+output <- NULL#
+#
+while(i < n){#
+  coordinates <- seq(i, i+9, 1)#
+  output<- c(output, coordinates)#
+  i <- i + 9#
+}
+output
+Test<-rnorm(1000)#
+TestM<-matrix(Test,100,10)#
+#
+n <- dim(TestM)[1]#
+i <- 1#
+output <- NULL#
+#
+while(i < n){#
+  coordinates <- seq(i, i+9, 1)#
+  output<- c(output, coordinates)#
+  i <- i + 19#
+}
+output
+Test<-rnorm(1000)#
+TestM<-matrix(Test,100,10)#
+#
+n <- dim(TestM)[1]#
+i <- 1#
+output <- NULL#
+#
+while(i < n){#
+  coordinates <- seq(i, i+9, 1)#
+  output<- c(output, coordinates)#
+  i <- i + 20#
+}
+output
+TestFinal<-TestM[output,]
+TestFinal
+OWLS<-read.txt("~/Dropbox/Amherst/Courses/Macroevolution/Preparation/Owls.txt", header=T)
+OWLS<-read.table("~/Dropbox/Amherst/Courses/Macroevolution/Preparation/Owls.txt", header=T)
+head(OWLS)
+OwlVar<- function(X1, Nest) {#
+  ifelse (Nest == "Sat", D1 <- X1[X1$FoodTreatment == "Satiated",], D1 <- X1[X1$FoodTreatment == "Deprived",])#
+    as.data.frame(D1)#
+}
+OwlVar(OWLS$Bo, "Sat")
+OwlVar(Bo, "Sat")
+Lizs<-read.csv("anolisData", na.strings="?")
+setwd("/Users/Home/Dropbox/Amherst/Courses/SOURCE/2015-Spring/Week3-While")
+Lizs<-read.csv("anolisData", na.strings="?")
+Lizs<-read.csv("anolisData.csv", na.strings="?")
+LizsRed<-Lizs[Lizs$Island=="Cuba" | Lizs$Island=="Hispaniola",]
+LizsRed
+LizVar<- function(X1, Island) {#
+  ifelse (Island == "Cuba",#
+  D1 <- X1[X1$Island == "Cuba",],#
+  D1 <- X1[X1$Island == "Hispaniola",])#
+    as.data.frame(D1)#
+}
+LizVar<- function(X1, Islands) {#
+  ifelse (Islands == "Cuba",#
+  D1 <- X1[X1$Island == "Cuba",],#
+  D1 <- X1[X1$Island == "Hispaniola",])#
+    as.data.frame(D1)#
+}
+LizVar(LizsRed, "Cuba")
+setwd("/Users/Home/Dropbox/Amherst/Courses/Macroevolution/Preparation")#
+Benthic <- read.table("RIKZ.txt", header = TRUE)#
+head(Benthic)#
+Species <- Benthic[ , 2:76]#
+#
+Index.function <- function(Spec,Choice1){#
+if (Choice1 == "Richness") {#
+  Index <- rowSums(Spec > 0, na.rm = TRUE)#
+    } else#
+if (Choice1 == "Total Abundance") {#
+  Index <- rowSums(Spec, na.rm = TRUE)#
+    } else#
+if (Choice1 == "Shannon") {#
+  RS <- rowSums(Spec, na.rm = TRUE)#
+  prop <- Spec / RS#
+  Index <- -rowSums(prop*log(prop),na.rm=TRUE)#
+  }#
+    else {#
+    print("Check your choice")#
+    Index <- NA#
+      }#
+list(Index = Index, MyChoice = Choice1)#
+}#
+#Let's get it wrong first by not capitalising the entries...#
+Index.function(Species, "total abundance")
+Index.function(Species, "Total Abundance")
+Index.function(Species, c("Total Abundance", "Shannon"))
+Species
+Index.function(Species, "Total Abundance")
+Lizs<-read.csv("anolisData.csv", na.strings="?", rownames=1)
+Lizs<-read.csv("anolisData.csv", na.strings="?", row.names=1)
+setwd("/Users/Home/Dropbox/Amherst/Courses/SOURCE/2015-Spring/Week3-While")
+Lizs<-read.csv("anolisData.csv", na.strings="?", row.names=1)
+anolis <- read.csv("anolisSample", rownames=1)
+anolis <- read.csv("anolisSample", row.names=1)
+anolis <- read.csv("anolisSample.csv", row.names=1)
+anolis
+Anolis <- read.csv("anolisSample.csv", row.names=1)
+head(Anolis)
+Index.function(Anolis, "total abundance")
+Index.function(Anolis, "Total Abundance")
+UJCentroid<-read.table("~/Dropbox/Amherst/TeachingAssistant/Fall2014/BURA/Molly/TPS/Mandible/ThreeGroup/ShrewMand1-3Age.TPS", header=F, sep=" ")
+UJCentroid<-read.csv("~/Desktop/ShrewMand1-3Age.csv", header=F)
+UJCentroid<-read.csv("~/Desktop/ShrewMand1-3Age.csv", header=F)
+head(UJCentroid, 15)
+UJCentroid<-read.csv("~/Desktop/ShrewMand1-3Age.csv", header=F)
+head(UJCentroid, 20)
+n <- dim(UJCentroid)[1]#
+i <- 1#
+output <- NULL#
+#
+while(i < n){#
+  coordinates <- seq(i, i+12, 1)#
+  output<- c(output, coordinates)#
+  i <- i + 17#
+}
+UJCoordinates<-UJCentroid[output,]
+UJCoordinates
+head(UJCoordinates, 10)
+UJint<-UJCentroid[output,]
+UJint[,1]<-as.character(UJint[,1])#
+UJint[,1]<-as.numeric(UJint[,1])
+UJint
+str(UJint)
+require(geomorph)
+Shrew<-readland.tps("~/Dropbox/Amherst/TeachingAssistant/Fall2014/BURA/Molly/TPS/Mandible/ThreeGroup/ShrewMand1-3Age.TPS")
+Shrew<-readland.tps("~/Dropbox/Amherst/TeachingAssistant/Fall2014/BURA/Molly/TPS/Mandible/ThreeGroup/ShrewMand1-3Age.TPS", specID="ID")
+Shrew
+gpagen(Shrew)
+Shrew<-readland.tps("~/Dropbox/Amherst/TeachingAssistant/Fall2014/BURA/Molly/TPS/Mandible/ThreeGroup/ShrewMand1-3Age.TPS", specID="imageID")
+gpagen(Shrew)
+gpagen(Shrew)$Csize
+as.data.frame(gpagen(Shrew)$Csize)
+Shrew<-readland.tps("~/Dropbox/Amherst/TeachingAssistant/Fall2014/BURA/Molly/TPS/Mandible/ThreeGroup/ShrewMand4-6Age.TPS", specID="imageID")#
+#
+as.data.frame(gpagen(Shrew)$Csize)
+Shrew<-readland.tps("~/Dropbox/Amherst/TeachingAssistant/Fall2014/BURA/Molly/TPS/Mandible/ThreeGroup/ShrewMand7-10Age.TPS", specID="imageID")#
+#
+as.data.frame(gpagen(Shrew)$Csize)
+Shrew<-readland.tps("~/Dropbox/Amherst/TeachingAssistant/Fall2014/BURA/Molly/TPS/SkullLat/ThreeGroup/skulls (lat) 0-24 weeks.TPS", specID="imageID")#
+#
+as.data.frame(gpagen(Shrew)$Csize)
+Shrew<-readland.tps("~/Dropbox/Amherst/TeachingAssistant/Fall2014/BURA/Molly/TPS/SkullLat/ThreeGroup/skulls (lat) 24-48 weeks.TPS", specID="imageID")#
+#
+as.data.frame(gpagen(Shrew)$Csize)
+Shrew<-readland.tps("~/Dropbox/Amherst/TeachingAssistant/Fall2014/BURA/Molly/TPS/SkullLat/ThreeGroup/skulls (lat) 48-72 weeks.TPS", specID="imageID")#
+#
+as.data.frame(gpagen(Shrew)$Csize)
+Shrew<-readland.tps("~/Dropbox/Amherst/TeachingAssistant/Fall2014/BURA/Molly/TPS/SkullVent/ThreeGroup/skulls (ven) 0-24 weeks.TPS", specID="imageID")#
+#
+as.data.frame(gpagen(Shrew)$Csize)
+Shrew<-readland.tps("~/Dropbox/Amherst/TeachingAssistant/Fall2014/BURA/Molly/TPS/SkullVent/ThreeGroup/skulls (ven) 24-48 weeks.TPS", specID="imageID")#
+#
+as.data.frame(gpagen(Shrew)$Csize)
+Shrew<-readland.tps("~/Dropbox/Amherst/TeachingAssistant/Fall2014/BURA/Molly/TPS/SkullVent/ThreeGroup/skulls (ven) 48-72 weeks.TPS", specID="imageID")#
+#
+as.data.frame(gpagen(Shrew)$Csize)
